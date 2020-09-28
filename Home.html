@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>Reaction Game</title>
+
+<style>
+#playArea{
+	width : 100% ;
+	border : none ;
+	height : 70% ;
+	background-color : lightBlue;
+}
+#target{
+	height :40px ;
+	width : 40px ;
+	border-radius : 40px ;
+	background-color : orange ;
+	position : relative ;
+}
+
+#time {
+	font-family : monospace;
+	letter-spacing : 4px ;
+}
+h1{
+	width : 100% ;
+	text-align : center ;
+	font-family : Arial ;
+}
+#score {
+	display : none ;
+}
+#startOther {
+	background-color : #ffb447 ;
+	border : none ;
+	padding : 2% 5% ;
+	margin : auto ;
+}
+#taps{
+	padding : 2% 5% ;
+	background : transparent ;
+	font-family : Arial ;
+	
+}
+	
+	
+
+</style>
+
+</head>
+
+<body  >
+
+<h1>Reaction Game</h1>
+
+<div id="playArea">
+
+<div id="target" onclick="spawn(),startTimer()" ></div>
+</div>
+
+<div id="time">Time</div>
+<div id="score"></div>
+
+
+<script>
+var milisecond = 100 ;
+var second = 10 ;
+var stopwatch ;
+var data ;
+var taps = 0  ;
+	
+function spawn(){
+	var t = document.getElementById("target") ;
+	var p = document.getElementById("playArea") ;
+
+	
+	var rheight = Math.floor(Math.random() * (90-10)+10)+"%" ;
+	var rwidth = Math.floor(Math.random() * 50)+"%" ;
+	
+	t.style.left = rheight ;
+	t.style.top = rwidth ;
+	
+	
+	taps +=1 ;
+	
+	data = document.getElementById("score").innerHTML ;
+	document.getElementById("score").innerHTML = data + "<br>" + second + "." + milisecond +"s";
+	
+	}
+	
+function startTimer() {
+	if(milisecond==100 && second==10)
+		stopwatch = setInterval(stopwatch,10) ;
+}
+function stopwatch(){
+	
+	milisecond -=  1 ; 
+	if(milisecond==001&&second==00){
+		clearInterval(stopwatch);
+		var p = document.getElementById("playArea") ;
+		//p.style.display = "flex" ;
+		//p.style.justify-content = "center" ;
+		
+		
+		p.innerHTML = "<h1>Game Over</h1><button id='startOther' onclick='startOther()'>Start Another</button><br>"+data+"<br><p id='taps'"+taps+"</p>";
+	}
+	if(milisecond%100==0){
+		second -= 1 ;
+		milisecond = 100 ;
+			
+	}
+	
+	document.getElementById("time").innerHTML =   second + "." + milisecond+"s" ;
+}
+
+function startOther() {
+	location.reload();
+	return false;
+}
+
+
+</script>
+
+</body>
+
+</html>
